@@ -104,8 +104,9 @@ create table kpelli_produto(
 	nome varchar(300) not null,
 	categoria int not null,
 	linha int not null,
-	unidMedida char(5) not null,
-	quantidade float not null,
+	quantidade varchar(30) not null,
+	preco float default 0,
+	descricao text default null
 );
 
 insert into kpelli_produto( nome, categoria, linha, unidMedida, quantidade) values

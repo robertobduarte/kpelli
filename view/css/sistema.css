@@ -68,6 +68,11 @@ a:focus {
   background: #251730!important;
 }
 
+
+.imagem_produto {
+  min-height: 200px;
+}
+
 .botao{
   padding: 30px 0;
   border: solid black 1px;

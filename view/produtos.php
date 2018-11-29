@@ -3,7 +3,15 @@ include_once __DIR__ . "/../config.php";
 include $_SERVER['DOCUMENT_ROOT'] . '/' . APP . "view/head.php";
 
 $m_produto = new Produto();
-//debug($m_produto);
+//debug($_POST);
+
+$categoria = ( isset( $_REQUEST['categoria'] ) && $_REQUEST['categoria'] != 't' )? $_REQUEST['categoria'] : '';
+$linha = ( isset( $_REQUEST['linha'] ) && $_REQUEST['linha'] != 't' )? $_REQUEST['linha'] : '';
+
+$filtros = array( 
+	'categoria' => $categoria, 
+	'linha' => $linha 
+);
 ?>
 
 
@@ -23,8 +31,8 @@ $m_produto = new Produto();
 		<div class="col-md-12 corpoPage">
 
 		<div class="col-md-12">
-		<?php $m_produto->filtroProdutos()?>
-		<?php $m_produto->listProdutos()?>
+		<?php $m_produto->filtroProdutos( $filtros )?>
+		<?php $m_produto->listProdutos( $filtros )?>
 		</div>
 
 	</div>

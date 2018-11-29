@@ -35,11 +35,13 @@ class DaoProduto extends IDao{
 
 
 
-	public function listar(){
+	public function listar( $filtros ){
 
+		$filtroCategoria = ( !empty( @$filtros['categoria'] ) )? ' AND categoria = ' . $filtros['categoria'] : '';
+		$filtroLinha = ( !empty( @$filtros['linha'] ) )? ' AND linha = ' . $filtros['linha'] : '';
 		try {
 
-			$sql = "SELECT * FROM ".PFX."produto";
+			$sql = "SELECT * FROM ".PFX."produto WHERE id > 0" . $filtroCategoria . $filtroLinha;
 
 			$query = $this->conex->prepare( $sql );
 			
@@ -62,6 +64,77 @@ class DaoProduto extends IDao{
 	}
 
 
+	public function inserir( IObject $produto ){
+
+		echo '<pre>';
+		print_r($produto);
+		echo '</pre>';
+		//exit();
+
+		try{
+
+			$sql = "INSERT INTO ".PFX."produto ( nome, categoria, linha, quantidade, preco, descricao ) 
+					VALUES ( :nome, :categoria, :linha, :quantidade, :preco, :descricao )";
+
+			$this->conex->beginTransaction();
+
+			$query = $this->conex->prepare( $sql );
+			$query->bindParam( ':nome', $produto->__get('nome') );
+			$query->bindParam( ':categoria', $produto->__get('categoria') );
+			$query->bindParam( ':linha', $produto->__get('linha') );
+			$query->bindParam( ':quantidade', $produto->__get('quantidade') );
+			$query->bindParam( ':preco', $produto->__get('preco') );
+			$query->bindParam( ':descricao', $produto->__get('descricao') );
+
+			$query->execute();
+
+            $lastId = $this->conex->lastInsertId();         
+            $this->conex->commit();
+
+            return $lastId;
+
+		}catch( Exception $e ){
+
+			$this->conex->rollback();
+			return false;
+		}
+
+	}
+
+
+
+	public function editar( Iobject $produto ){
+
+		
+		try{
+
+			$sql = "UPDATE ".PFX."produto	SET 
+					nome = :nome, categoria = :categoria, linha = :linha, 
+					quantidade = :quantidade, preco = :preco, descricao = :descricao
+					WHERE id = :id";
+
+			$this->conex->beginTransaction();
+			$query = $this->conex->prepare( $sql );
+
+			$query->bindParam( ':nome', $produto->__get('nome') );
+			$query->bindParam( ':categoria', $produto->__get('categoria') );
+			$query->bindParam( ':linha', $produto->__get('linha') );
+			$query->bindParam( ':quantidade', $produto->__get('quantidade') );
+			$query->bindParam( ':preco', $produto->__get('preco') );
+			$query->bindParam( ':descricao', $produto->__get('descricao') );
+			$query->bindParam( ':id', $produto->__get('id') );
+
+			$query->execute();
+        
+            return $this->conex->commit();
+
+		}catch( Exception $e ){
+
+			$this->conex->rollback();
+			return false;
+		}
+
+	}
 
 
 

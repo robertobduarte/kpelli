@@ -56,10 +56,6 @@ abstract class Iupload {
 
 		$this->caminho_relativo = ( isset( $dados['caminho_relativo'] ) && !empty( $dados['caminho_relativo'] ) ) ? $dados['caminho_relativo'] : $this->caminho_relativo;
 
-		if( empty( $this->caminho_relativo ) ){
-
-			$this->caminho_relativo = 'dominio';
-		}
 
 		$this->caminho_absoluto = $_SERVER['DOCUMENT_ROOT'] . '/' . APP . $this->caminho_relativo;
 		

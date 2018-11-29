@@ -43,12 +43,14 @@ abstract class Icontroller {
             
         } 
 
+        $this->action = $this->dados['action'];
+        $this->method = @$this->dados['method']; 
+
         $this->m_autenticacao = new Autenticacao();
         $this->m_autenticacao->checkAcess();
 
         $this->definePropriedades();
         $this->checkParams();
-        $this->checkDadosType();
         $this->startAction();
 
     }
@@ -123,94 +125,6 @@ abstract class Icontroller {
         exit();
     }
 
-
-    
-    protected function checkDadosType(){
-
-        $errors = array();
-
-        //if( $this->method != 'ajaxRequest' ){
-        if( $this->dados['method'] != 'ajaxRequest' ){
-
-            if ( !empty( $this->m_object->__get('tiposDeDados') ) ){
-
-                $tiposDeDados = $this->m_object->__get('tiposDeDados');
-
-                foreach ($tiposDeDados as $chave => $dado ) {
-
-                    //verifica o tipo de dado
-                    if ( array_key_exists( $chave, $this->dados ) && !empty( $this->dados[$chave] ) ){
-
-                    switch ( $dado['type'] ) {
-
-                        case 'int':
-
-                            if ( !is_int( intval( $this->dados[$chave] ) ) ||  intval( $this->dados[$chave] ) == 0 ){
-
-                                $errors[] = array( 'msg' => 'Valor invalido: ' . $chave . ' => ' . $this->dados[$chave] . ' = ' . $dado['type'] );
-
-                            }else{
-
-                                $this->dados[$chave] = intval( $this->dados[$chave] );
-                            }
-
-                            break;
-
-                        case 'float':
-
-                            if ( !is_float( floatval( $this->dados[$chave] ) ) ||  floatval( $this->dados[$chave] ) == 0  ){
-
-                                $errors[] = array( 'msg' => 'Valor invalido: ' . $chave . ' => ' . $this->dados[$chave] . ' = ' . $dado['type'] );
-                            
-                            }else{
-
-                                $this->dados[$chave] = floatval( $this->dados[$chave] );
-                            }
-
-                            break;
-                        }
-
-                    }
-
-                    if ( $dado['mandatory'] ){
-
-                        if ( !array_key_exists( $chave, $this->dados ) || empty( $this->dados[$chave] ) ){
-
-                            $errors[] = array( 'msg' => 'Valor obrigatório não encontrado: ' . $chave . ' => ' . $this->dados[$chave] );
-                        }
-                    }
-
-                    if ( $dado['size'] ){
-
-                        if ( array_key_exists( $chave, $this->dados ) && !empty( $this->dados[$chave] ) ){
-
-                            if( strlen( $this->dados[$chave] ) > $dado['size'] ){
-
-                                $errors[] = array( 'msg' => 'Valor informado excede o limite máximo esperado: ' . $chave . ' => ' . $this->dados[$chave] );
-
-                            }
-                        }
-                    }
-                }
-            }
-
-            if( !empty( $errors ) ) {
-
-                $mensagem = '';
-
-                foreach ($errors as $erro ) {
-                    
-                    $mensagem .= $erro['msg'] . '<br>';
-
-                }
-
-                $this->redirect( array( 'msg' => $mensagem ) );
-
-            }
-
-        }        
-    
-    }
 
 
     protected function checaDados(){
