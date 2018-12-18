@@ -66,11 +66,6 @@ class DaoProduto extends IDao{
 
 	public function inserir( IObject $produto ){
 
-		echo '<pre>';
-		print_r($produto);
-		echo '</pre>';
-		//exit();
-
 		try{
 
 			$sql = "INSERT INTO ".PFX."produto ( nome, categoria, linha, quantidade, preco, descricao ) 

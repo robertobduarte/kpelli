@@ -25,7 +25,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/' . APP . "autoload.php";
 //VARIÁVEIS DE AMBIENTE environment.txt
 
 $file = $_SERVER['DOCUMENT_ROOT'] . '/' . APP . "environment.txt";
-$env = file_get_contents($file);
+$env = trim( file_get_contents($file) );
 
 if( $env == 'desenvolvimento'){
 
@@ -41,10 +41,10 @@ if( $env == 'desenvolvimento'){
 			
 	//BANCO DE DADOS***********
 	define('DB', "mysql");
-	define('DB_NAME', "base");
-	define('DB_HOST', "localhost");
-	define('DB_USER', "root");
-	define('DB_PASS', "");
+	define('DB_NAME', "robertoduarte01");
+	define('DB_HOST', "mysql.robertoduarte.com.br");
+	define('DB_USER', "robertoduarte01");
+	define('DB_PASS', "mamufi2008");
 	define('DB_PORT', "3306");
 
 }
