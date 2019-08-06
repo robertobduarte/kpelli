@@ -10,6 +10,10 @@ $usuario = $m_session->getValue( 'usuario' );
 $perfil = $m_session->getValue( 'perfil' );
 $perfilNome = $m_session->getValue( 'perfil_nome' );
 
+
+
+$m_menu = new Menu();
+$menus = $m_menu->listMenu(true);
 ?>
 
 <!DOCTYPE html>
@@ -54,22 +58,22 @@ $perfilNome = $m_session->getValue( 'perfil_nome' );
 			<div class="collapse navbar-collapse col-md-8 col-sm-12" id="menu">				
 				<ul class="nav navbar-nav">	
 					<?php
-					/* 
+					
 					foreach($menus as $menu){
-						if($menu['submenu'] == 'S'){
+						/*if( $menu->__get('submenu') == 'S' ){
 							echo '<li class="dropdown">';
-								echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">'.$menu['label'].'</a>';
+								echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">' . $menu->__get('nome') . '</a>';
 								echo '<ul class="dropdown-menu">';
-								foreach($menu['submenus'] as $submenu){
-									echo '<li><a href="' . $submenu['caminho'] . '">'.$submenu['label'] . '</a></li>';
+								foreach($menu->__get('submenus') as $submenu){
+									echo '<li><a href="' . $submenu->__get('caminho') . '">'.$submenu->__get('nome') . '</a></li>';
 								}
 								echo '</ul>';
 							echo '</li>';					
-						}else{
-							echo '<li class="nav-item"><a href="' . $menu['caminho'] . '">' . $menu['label'].'</a></li>';
-						}					
+						}else{*/
+							echo '<li class="nav-item"><a href="' . $menu->__get('caminho'). '">' . $menu->__get('nome') . '</a></li>';
+						//}					
 					}
-					*/
+					
 					?>				
 				</ul>				
 			</div><!-- /.navbar-collapse -->			

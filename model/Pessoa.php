@@ -92,7 +92,8 @@ class Pessoa extends IObject{
 
 	public function filtroPessoas( $filtros ){
 
-		echo '<div class="row">';
+		echo '<div class="row">';			
+
 			echo '<form id="listPessoas" action="pessoas.php" method="post">';
 
 				echo '<div class="col-md-4 col-sm-6 col-xs-12">';
@@ -103,6 +104,9 @@ class Pessoa extends IObject{
 				echo '</div>';
 
 			echo '</form>';
+
+			$this->buttonNovo();
+			
 		echo '</div>';
 
 	}

@@ -2,8 +2,8 @@
 include_once __DIR__ . "/../config.php";
 include $_SERVER['DOCUMENT_ROOT'] . '/' . APP . "view/head.php";
 
-$m_menu = new Menu();
-$menus = $m_menu->listMenu(true);
+/*$m_menu = new Menu();
+$menus = $m_menu->listMenu(true);*/
 
 //debug($_SESSION);
 ?>
